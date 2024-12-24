@@ -1,21 +1,33 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, Collection } from "mongodb";
 import { ObjectId } from "mongodb";
+import self from './dbo';
 
 const uri = "mongodb://127.0.0.1:27017";
 const client = new MongoClient(uri);
 
-export const connectToDatabase = async () => {
+const connectToDatabase = async () => {
     try {
         await client.connect();
 
         await client.db("mern-todo").command({ ping: 1 });
         console.log("Database ping returned successful");
-    } finally {
+    } catch (err) {
+		console.error(err);
+	} finally {
         await client.close();
     }
 }
 
-export const getAll = async (databaseName: string, collectionName: string) => {
+const getManyByQuery = async (collection: Collection, query: any) => {
+	try{
+		return await collection.find(query).toArray();
+	}
+	catch(err){
+		throw err;
+	}
+};
+
+const getAll = async (databaseName: string, collectionName: string) => {
 	let result = [];
 	try {
 		await client.connect();
@@ -23,7 +35,7 @@ export const getAll = async (databaseName: string, collectionName: string) => {
 		const database = client.db(databaseName);
 		const collection = database.collection(collectionName);
 
-		result = await collection.find({}).toArray();
+		result = await self.getManyByQuery(collection, {});
 	} catch(err){
 		throw err
 	}finally {
@@ -32,7 +44,7 @@ export const getAll = async (databaseName: string, collectionName: string) => {
 	return result;
 }
 
-export const insertOne = async (databaseName: string, collectionName: string, document: any) => {
+const insertOne = async (databaseName: string, collectionName: string, document: any) => {
 	let result;
 	try {
 		await client.connect();
@@ -49,7 +61,7 @@ export const insertOne = async (databaseName: string, collectionName: string, do
 	return result;
 }
 
-export const deleteOne = async (databaseName: string, collectionName: string, _id: ObjectId) => {
+const deleteOne = async (databaseName: string, collectionName: string, _id: ObjectId) => {
 	let result;
 	try {
 		await client.connect();
@@ -66,7 +78,7 @@ export const deleteOne = async (databaseName: string, collectionName: string, _i
 	return result;
 }
 
-export const updateOne = async (databaseName: string, collectionName: string, _id: ObjectId, document: any) => {
+const updateOne = async (databaseName: string, collectionName: string, _id: ObjectId, document: any) => {
 	let result;
 	try {
 		await client.connect();
@@ -82,4 +94,13 @@ export const updateOne = async (databaseName: string, collectionName: string, _i
 		await client.close();
 	}
 	return result;
+}
+
+export default {
+	connectToDatabase,
+	getManyByQuery,
+	getAll,
+	insertOne,
+	deleteOne,
+	updateOne
 }
