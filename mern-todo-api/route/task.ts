@@ -1,8 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Task } from '../entities/task';
-import * as repository from '../repository/taskRepository';
 import * as dataService from '../service/taskService';
-import { ObjectId } from 'mongodb';
 
 const router = express.Router();
 
