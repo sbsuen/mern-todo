@@ -1,13 +1,14 @@
 import express, { Request, Response } from 'express';
 import { Task } from '../entities/task';
-import { getTodoList, insertTask, deleteTask, updateTask } from '../repository/taskRepository';
+import * as repository from '../repository/taskRepository';
+import * as dataService from '../service/taskService';
 import { ObjectId } from 'mongodb';
 
 const router = express.Router();
 
 //Get All
 router.get('/getTodoList', async (req: Request, res: Response) => {
-	getTodoList().then((todos) => {
+	dataService.getTodoList().then((todos) => {
 		res.send(todos);
 	}).catch((err) => {	
 		res.status(500);
@@ -17,11 +18,8 @@ router.get('/getTodoList', async (req: Request, res: Response) => {
 
 //Insert
 router.post('/addTask/:name', async (req: Request, res: Response) => {
-	const task: Task = {
-		name: req.params.name,
-		isComplete: false
-	};
-	insertTask(task).then((result) => {
+	const name = req.params.name;
+	dataService.addTask(name).then((result) => {
 		res.send(result);
 	}).catch((err) => {	
 		console.error(err);
@@ -32,8 +30,8 @@ router.post('/addTask/:name', async (req: Request, res: Response) => {
 
 //Delete
 router.delete('/deleteTask/:id', async (req: Request, res: Response) => {
-	const _id = new ObjectId(req.params.id);
-	deleteTask(_id).then((result) => {
+	const id = req.params.id;
+	dataService.deleteTask(id).then((result) => {
 		res.send(result);
 	}).catch((err) => {	
 		console.error(err);
@@ -44,12 +42,8 @@ router.delete('/deleteTask/:id', async (req: Request, res: Response) => {
 
 //Update
 router.post('/updateTask/:id/:name/:isComplete', async (req: Request, res: Response) => {
-	const task: Task = {
-		name: req.params.name,
-		isComplete: req.params.isComplete === 'true' ? true : false
-	};
-	const _id = new ObjectId(req.params.id);
-	updateTask(_id, task).then((result) => {
+	const { id, name, isComplete } = req.params;
+	dataService.updateTask(id, name, isComplete).then((result) => {
 		res.send(result);
 	}).catch((err) => {	
 		console.error(err);
