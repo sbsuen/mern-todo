@@ -6,7 +6,7 @@ const port = 3000;
 
 app.use(toDoRouter);
 
-import dbo from './db/dbo';
+import dbo from './shared/dbo';
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

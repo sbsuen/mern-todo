@@ -1,11 +1,11 @@
-import dbo from "../db/dbo";
-import { Task } from "../entities/task";
+import dbo from "../shared/dbo";
+import Task from "../entities/task";
 import { ObjectId } from "mongodb";
 
 const databaseName = "mern-todo";
 const collectionName = "task";
 
-export const getTodoList = async () => {
+export const getAllTasks = async () => {
 	return dbo.getAll(databaseName, collectionName);
 }
 

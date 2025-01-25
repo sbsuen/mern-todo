@@ -1,14 +1,14 @@
 import { describe, expect, test } from '@jest/globals';
 import { ObjectId } from 'mongodb';
 import * as repository from './taskRepository'
-import dbo from '../db/dbo';
-import { Task } from '../entities/task';
+import dbo from '../shared/dbo';
+import Task from '../entities/task';
 
-jest.mock('../db/dbo');
+jest.mock('../shared/dbo');
 
 describe('taskRepository', () => {
 	test('getTodoList', async () => {
-		await repository.getTodoList();
+		await repository.getAllTasks();
 		expect(dbo.getAll).toBeCalledTimes(1);
 		expect(dbo.getAll).toBeCalledWith('mern-todo', 'task');
 	});

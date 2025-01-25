@@ -2,14 +2,14 @@ import { describe, expect, test } from '@jest/globals';
 import { ObjectId } from 'mongodb';
 import * as repository from '../repository/taskRepository';
 import * as dataService from './taskService';
-import { Task } from '../entities/task';
+import Task from '../entities/task';
 
 jest.mock('../repository/taskRepository');
 
 describe('taskService', () => {
 	test('getTodoList', async () => {
 		await dataService.getTodoList();
-		expect(repository.getTodoList).toBeCalledTimes(1);
+		expect(repository.getAllTasks).toBeCalledTimes(1);
 	});
 	test('addTask', async () => {
 		const name = 'task';

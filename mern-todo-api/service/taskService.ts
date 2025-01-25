@@ -1,9 +1,9 @@
 import { ObjectId } from 'mongodb';
 import * as repository from '../repository/taskRepository';
-import { Task } from '../entities/task';
+import Task from '../entities/task';
 
 export async function getTodoList() {
-	return repository.getTodoList();
+	return repository.getAllTasks();
 }
 
 export async function addTask(name: string) {
