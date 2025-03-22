@@ -1,16 +1,13 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
-import './components/ToDoList/ToDoList';
+import { useReducer } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
+import Task from './models/Task';
 import ToDoList from './components/ToDoList/ToDoList';
 
 function App() {
-  return (
-    <>
-      <ToDoList />
-    </>
-  )
+	return (
+		<ToDoList />
+	)
 }
-
 export default App
