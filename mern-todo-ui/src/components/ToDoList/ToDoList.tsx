@@ -2,18 +2,27 @@ import { useState } from 'react';
 import { ToDoListProvider } from '../../contexts/ToDoListContext';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
-import AddTaskForm from '../AddTaskForm/AddTaskForm';
+import { AddTaskForm, AddTaskFormSubmitButton } from '../AddTaskForm/AddTaskForm';
 import TaskList from '../TaskList/TaskList';
 
 const ToDoList: React.FC<any> = () => {
 	const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-	const showAddTaskModalHandler = () => {
+	const openAddTaskModal = () => {
 		setShowAddTaskModal(true);
 	};
 
-	const hideAddTaskModalHandler = () => {
+	const closeAddTaskModal = () => {
 		setShowAddTaskModal(false);
+	};
+
+	const openDeleteTaskModal = () => {
+		setShowDeleteModal(true);
+	};
+
+	const closeDeleteTaskModal = () => {
+		setShowDeleteModal(false);
 	};
 
 	return (
@@ -27,18 +36,19 @@ const ToDoList: React.FC<any> = () => {
 					<div className='col-auto'>
 						<Button
 							label="Add Task"
-							onClick={showAddTaskModalHandler}
+							onClick={openAddTaskModal}
 						/>
 					</div>
 				</div>
 				<TaskList />
 				<Modal
 					id='addTaskModal'
+					title='Add Task'
 					show={showAddTaskModal}
-					onClose={hideAddTaskModalHandler}
-				>
-					<AddTaskForm onClose={hideAddTaskModalHandler} />
-				</Modal>
+					onClose={closeAddTaskModal}
+					modalBody={<AddTaskForm onClose={closeAddTaskModal} />}
+					modalFooter={<AddTaskFormSubmitButton />}
+				/>
 			</div>
 		</ToDoListProvider>
 	);

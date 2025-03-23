@@ -1,14 +1,18 @@
-import CloseButton from '../CloseButton/CloseButton';
+import ModalHeader from '../ModalHeader/ModalHeader';
+import ModalBody from '../ModalBody/ModalBody';
+import ModalFooter from '../ModalFooter/ModalFooter';
 import './Modal.scss';
 
 interface ModalProps {
-	children: React.ReactNode;
 	id: string;
+	title: string;
 	show: boolean;
 	onClose: () => void;
+	modalBody?: React.ReactNode | undefined;
+	modalFooter?: React.ReactNode | undefined;
 }
 
-const Modal: React.FC<ModalProps> = ({ children, id, show, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ id, title, show, onClose, modalBody = undefined, modalFooter = undefined }) => {
 
 	const handleOutsideClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		if (event.target === event.currentTarget) {
@@ -31,13 +35,9 @@ const Modal: React.FC<ModalProps> = ({ children, id, show, onClose }) => {
 		>
 			<div className='modal-dialog' role='document'>
 				<div className='modal-content'>
-					<div className='modal-header'>
-						<h5 className='modal-title'>Add Task</h5>
-						<CloseButton onClick={onClose} />
-					</div>
-					<div className='modal-body'>
-						{children}
-					</div>
+					<ModalHeader title={title} onClose={onClose} />
+					{modalBody && <ModalBody>{modalBody}</ModalBody>}
+					{modalFooter && <ModalFooter>{modalFooter}</ModalFooter>}
 				</div>
 			</div>
 		</div>

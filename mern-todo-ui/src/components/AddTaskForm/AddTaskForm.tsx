@@ -7,7 +7,7 @@ interface AddTaskFormProps {
 	onClose: () => void;
 }
 
-const AddTaskForm: React.FC<any> = ( { onClose }) => {
+export const AddTaskForm: React.FC<AddTaskFormProps> = ( { onClose }) => {
 	const [formData, setFormData] = useState({
 		taskName: ''
 	});
@@ -36,7 +36,7 @@ const AddTaskForm: React.FC<any> = ( { onClose }) => {
 	};
 
 	return (
-		<form onSubmit={ handleSubmit }>
+		<form id="addTaskForm" onSubmit={ handleSubmit }>
 			<div className='form-group pb-2'>
 				<label htmlFor='addTaskName'>Task Name</label>
 				<input 
@@ -48,12 +48,14 @@ const AddTaskForm: React.FC<any> = ( { onClose }) => {
 					onChange={handleChange} 
 				/>
 			</div>
-			<Button
-				label='Submit'
-				type={'submit'}
-			/>
 		</form>
 	);
 };
 
-export default AddTaskForm;
+export const AddTaskFormSubmitButton = () => (
+	<Button
+		label='Submit'
+		type={'submit'}
+		form='addTaskForm'
+	/>
+);
