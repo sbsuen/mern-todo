@@ -28,7 +28,7 @@ const tasksReducer = (tasks: Task[], action: TaskAction) => {
 				}
 			});
 		default:
-			return tasks;
+			throw Error(`Unknown Action: ${action.type}`);
 	}
 };
 

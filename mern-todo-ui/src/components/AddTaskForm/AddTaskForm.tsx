@@ -1,15 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { ToDoListDispatchContext } from '../../contexts/ToDoListContext';
 
 import Button from '../Button/Button';
 
-interface AddTaskFormProps {
-	handleAddTask: (task: string) => void;
-};
-
-const AddTaskForm: React.FC<AddTaskFormProps> = ( { handleAddTask}  ) => {
+const AddTaskForm: React.FC<any> = () => {
 	const [formData, setFormData] = useState({
 		taskName: ''
 	});
+	const dispatch = useContext(ToDoListDispatchContext);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -21,7 +19,12 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ( { handleAddTask}  ) => {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		handleAddTask(formData.taskName);
+		if (dispatch) {
+			dispatch({
+				type: 'ADD_TASK',
+				payload: formData.taskName
+			});
+		}
 		setFormData({
 			taskName: ''
 		});
@@ -40,7 +43,12 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ( { handleAddTask}  ) => {
 					onChange={handleChange} 
 				/>
 			</div>
-			<Button label='Submit' type={'submit'}  />
+			<Button
+				label='Submit'
+				type={'submit'}
+				modalId={'addTaskModal'}
+				dismissesModal={true}
+			/>
 		</form>
 	);
 };

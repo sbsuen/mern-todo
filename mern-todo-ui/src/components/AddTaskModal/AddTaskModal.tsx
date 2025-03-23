@@ -2,11 +2,8 @@ import React from 'react';
 
 import AddTaskForm from '../AddTaskForm/AddTaskForm';
 
-interface AddTaskModalProps {
-	handleAddTask: (task: string) => void;
-};
-
-const AddTaskModal: React.FC<AddTaskModalProps> = ({ handleAddTask }) => {
+const AddTaskModal: React.FC<any> = () => {
+	
 	return (
 		<div
 			className='modal fade'
@@ -27,7 +24,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ handleAddTask }) => {
 						></button>
 					</div>
 					<div className='modal-body'>
-						<AddTaskForm handleAddTask={handleAddTask} />
+						<AddTaskForm />
 					</div>
 				</div>
 			</div>
