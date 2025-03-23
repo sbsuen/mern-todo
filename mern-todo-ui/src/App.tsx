@@ -1,5 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'bulma/css/bulma.min.css';
 
 import ToDoList from './components/ToDoList/ToDoList';
 

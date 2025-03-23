@@ -6,9 +6,9 @@ interface ModalFooterProps {
 
 const ModalFooter: React.FC<ModalFooterProps> = ({ children }) => {
 	return (
-		<div className="modal-footer">
+		<footer className="modal-card-foot">
 			{children}
-		</div>
+		</footer>
 	);
 };
 

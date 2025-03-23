@@ -5,13 +5,15 @@ interface ButtonProps {
 	onClick?: () => void | undefined;
 	type?: string;
 	form?: string;
+	buttonStyle?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({ 
 	label, 
 	onClick = undefined, 
 	type = 'button',
-	form = ''
+	form = '',
+	buttonStyle = ''
 }) => {
 	const getButtonType = () => {
 		switch(type) {
@@ -25,9 +27,34 @@ const Button: React.FC<ButtonProps> = ({
 		}
 	};
 
+	const getButtonStyle = () => {
+		switch(buttonStyle) {
+			case 'primary':
+				return 'is-primary';
+			case 'danger':
+				return 'is-danger';
+			case 'warning':
+				return 'is-warning';
+			case 'info':
+				return 'is-info';
+			case 'success':
+				return 'is-success';
+			case 'link':
+				return 'is-link';
+			case 'light':
+				return 'is-light';
+			case 'dark':
+				return 'is-dark';
+			case 'text':
+				return 'is-text';
+			default:
+				return '';
+		}
+	};
+
 	return (
 		<button 
-			className="btn btn-primary" 
+			className={`button ${getButtonStyle()}`}
 			type={getButtonType()} 
 			onClick={onClick}
 			form={form}

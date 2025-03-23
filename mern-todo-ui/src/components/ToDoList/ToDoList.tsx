@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ToDoListProvider } from '../../contexts/ToDoListContext';
+import AppContextProvider from '../../contexts/AppContextProvider';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import { AddTaskForm, AddTaskFormSubmitButton } from '../AddTaskForm/AddTaskForm';
@@ -26,19 +27,16 @@ const ToDoList: React.FC<any> = () => {
 	};
 
 	return (
-		<ToDoListProvider>
+		<AppContextProvider>
 			<div className="container">
-				<div className="row">
-					<h1 className='text-center mt-5 mb-3'>My Todo List</h1>
-				</div>
+				<h1 className='is-size-1 has-text-centered mt-3 mb-3'>My Todo List</h1>
 				<hr />
-				<div className="row justify-content-center">
-					<div className='col-auto'>
-						<Button
-							label="Add Task"
-							onClick={openAddTaskModal}
-						/>
-					</div>
+				<div className='is-flex is-justify-content-center'>
+					<Button
+						label="Add Task"
+						buttonStyle="link"
+						onClick={openAddTaskModal}
+					/>
 				</div>
 				<TaskList />
 				<Modal
@@ -50,7 +48,7 @@ const ToDoList: React.FC<any> = () => {
 					modalFooter={<AddTaskFormSubmitButton />}
 				/>
 			</div>
-		</ToDoListProvider>
+		</AppContextProvider>
 	);
 };
 

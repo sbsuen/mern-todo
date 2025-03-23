@@ -1,7 +1,7 @@
 import ModalHeader from '../ModalHeader/ModalHeader';
 import ModalBody from '../ModalBody/ModalBody';
 import ModalFooter from '../ModalFooter/ModalFooter';
-import './Modal.scss';
+//import './Modal.scss';
 
 interface ModalProps {
 	id: string;
@@ -21,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({ id, title, show, onClose, modalBody = und
 	}
 	return (
 		<div
-			className={`modal ${show ? 'modal-show' : 'modal-hide'}`}
+			className='modal'
 			tabIndex={-1}
 			id={id}
 			role='dialog'
@@ -33,7 +33,8 @@ const Modal: React.FC<ModalProps> = ({ id, title, show, onClose, modalBody = und
 			onClick={handleOutsideClick}
 			aria-hidden={show}
 		>
-			<div className='modal-dialog' role='document'>
+			<div className='modal-background' onClick={handleOutsideClick}></div>
+			<div className='modal-card' role='document'>
 				<div className='modal-content'>
 					<ModalHeader title={title} onClose={onClose} />
 					{modalBody && <ModalBody>{modalBody}</ModalBody>}

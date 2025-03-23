@@ -6,9 +6,9 @@ interface ModalBodyProps {
 
 const ModalBody: React.FC<ModalBodyProps> = ({ children }) => {
 	return (
-		<div className="modal-body">
+		<section className="modal-card-body">
 			{children}
-		</div>
+		</section>
 	);
 };
 

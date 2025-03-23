@@ -7,10 +7,10 @@ interface ModalHeaderProps {
 
 const ModalHeader: React.FC<ModalHeaderProps> = ({ title, onClose }) => {
 	return (
-		<div className='modal-header'>
-			<h5 className='modal-title'>{title}</h5>
+		<header className='modal-card-head'>
+			<p className='modal-card-title'>{title}</p>
 			<CloseButton onClick={onClose} />
-		</div>
+		</header>
 	);
 };
 

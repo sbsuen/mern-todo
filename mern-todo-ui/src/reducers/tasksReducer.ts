@@ -27,6 +27,8 @@ const tasksReducer = (tasks: Task[], action: TaskAction) => {
 					return task;
 				}
 			});
+		case 'DELETE_TASK':
+			return tasks.filter((task) => task._id !== action.payload);
 		default:
 			throw Error(`Unknown Action: ${action.type}`);
 	}

@@ -8,10 +8,9 @@ const CloseButton: React.FC<CloseButtonProps> = ({ onClick = undefined }) => {
 	return (
 		<button 
 			type="button" 
-			className="btn-close" 
-			aria-label="Close"
+			className="delete" 
+			aria-label="close"
 			onClick={onClick}
-			data-dismiss="modal"
 		></button>
 	);
 };

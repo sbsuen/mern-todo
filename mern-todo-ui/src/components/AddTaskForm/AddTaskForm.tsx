@@ -7,7 +7,7 @@ interface AddTaskFormProps {
 	onClose: () => void;
 }
 
-export const AddTaskForm: React.FC<AddTaskFormProps> = ( { onClose }) => {
+export const AddTaskForm: React.FC<AddTaskFormProps> = ({ onClose }) => {
 	const [formData, setFormData] = useState({
 		taskName: ''
 	});
@@ -18,7 +18,7 @@ export const AddTaskForm: React.FC<AddTaskFormProps> = ( { onClose }) => {
 		setFormData({
 			...formData,
 			[name]: value
-		});	
+		});
 	};
 
 	const handleSubmit = (e: React.FormEvent) => {
@@ -36,18 +36,16 @@ export const AddTaskForm: React.FC<AddTaskFormProps> = ( { onClose }) => {
 	};
 
 	return (
-		<form id="addTaskForm" onSubmit={ handleSubmit }>
-			<div className='form-group pb-2'>
-				<label htmlFor='addTaskName'>Task Name</label>
-				<input 
-					type='text' 
-					className='form-control' 
-					id='addTaskName'
-					name="taskName"
-					value={formData.taskName} 
-					onChange={handleChange} 
-				/>
-			</div>
+		<form id="addTaskForm" onSubmit={handleSubmit}>
+			<label className='label' htmlFor='addTaskName'>Task Name</label>
+			<input
+				type='text'
+				className='input'
+				id='addTaskName'
+				name="taskName"
+				value={formData.taskName}
+				onChange={handleChange}
+			/>
 		</form>
 	);
 };
@@ -56,6 +54,7 @@ export const AddTaskFormSubmitButton = () => (
 	<Button
 		label='Submit'
 		type={'submit'}
+		buttonStyle='link'
 		form='addTaskForm'
 	/>
 );
