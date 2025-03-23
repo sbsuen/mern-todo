@@ -1,9 +1,21 @@
+import { useState } from 'react';
 import { ToDoListProvider } from '../../contexts/ToDoListContext';
 import Button from '../Button/Button';
-import AddTaskModal from '../AddTaskModal/AddTaskModal';
+import Modal from '../Modal/Modal';
+import AddTaskForm from '../AddTaskForm/AddTaskForm';
 import TaskList from '../TaskList/TaskList';
 
 const ToDoList: React.FC<any> = () => {
+	const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+
+	const showAddTaskModalHandler = () => {
+		setShowAddTaskModal(true);
+	};
+
+	const hideAddTaskModalHandler = () => {
+		setShowAddTaskModal(false);
+	};
+
 	return (
 		<ToDoListProvider>
 			<div className="container">
@@ -15,12 +27,18 @@ const ToDoList: React.FC<any> = () => {
 					<div className='col-auto'>
 						<Button
 							label="Add Task"
-							modalId='addTaskModal'
+							onClick={showAddTaskModalHandler}
 						/>
 					</div>
 				</div>
 				<TaskList />
-				<AddTaskModal />
+				<Modal
+					id='addTaskModal'
+					show={showAddTaskModal}
+					onClose={hideAddTaskModalHandler}
+				>
+					<AddTaskForm onClose={hideAddTaskModalHandler} />
+				</Modal>
 			</div>
 		</ToDoListProvider>
 	);

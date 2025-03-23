@@ -3,7 +3,11 @@ import { ToDoListDispatchContext } from '../../contexts/ToDoListContext';
 
 import Button from '../Button/Button';
 
-const AddTaskForm: React.FC<any> = () => {
+interface AddTaskFormProps {
+	onClose: () => void;
+}
+
+const AddTaskForm: React.FC<any> = ( { onClose }) => {
 	const [formData, setFormData] = useState({
 		taskName: ''
 	});
@@ -14,7 +18,7 @@ const AddTaskForm: React.FC<any> = () => {
 		setFormData({
 			...formData,
 			[name]: value
-		});
+		});	
 	};
 
 	const handleSubmit = (e: React.FormEvent) => {
@@ -28,6 +32,7 @@ const AddTaskForm: React.FC<any> = () => {
 		setFormData({
 			taskName: ''
 		});
+		onClose();
 	};
 
 	return (
@@ -46,8 +51,6 @@ const AddTaskForm: React.FC<any> = () => {
 			<Button
 				label='Submit'
 				type={'submit'}
-				modalId={'addTaskModal'}
-				dismissesModal={true}
 			/>
 		</form>
 	);
