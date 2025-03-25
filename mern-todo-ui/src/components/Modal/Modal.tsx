@@ -5,9 +5,9 @@ import ModalFooter from '../ModalFooter/ModalFooter';
 
 interface ModalProps {
 	id: string;
-	title: string;
 	show: boolean;
 	onClose: () => void;
+	title?: string;
 	modalBody?: React.ReactNode | undefined;
 	modalFooter?: React.ReactNode | undefined;
 }
@@ -36,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({ id, title, show, onClose, modalBody = und
 			<div className='modal-background' onClick={handleOutsideClick}></div>
 			<div className='modal-card' role='document'>
 				<div className='modal-content'>
-					<ModalHeader title={title} onClose={onClose} />
+					<ModalHeader title={title || ''} onClose={onClose} />
 					{modalBody && <ModalBody>{modalBody}</ModalBody>}
 					{modalFooter && <ModalFooter>{modalFooter}</ModalFooter>}
 				</div>

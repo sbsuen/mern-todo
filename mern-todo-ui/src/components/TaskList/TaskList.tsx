@@ -1,19 +1,23 @@
-import React, { useContext } from 'react';
-import { ToDoListContext } from '../../contexts/ToDoListContext';
+import React from 'react';
 import TaskListItem from '../TaskListItem/TaskListItem';
 import './TaskList.scss';
+import Task from '../../models/Task';
 
-const TaskList: React.FC = () => {
-	const tasks = useContext(ToDoListContext);
+interface TaskListProps {
+	tasks: Task[] | null;
+	openDeleteModal: () => void;
+}
+
+const TaskList: React.FC<TaskListProps> = ({ tasks, openDeleteModal }) => {
 	return (
 		<div className='content mt-5'>
 			<ul>
 				{tasks && tasks.map((task) => (
-					<TaskListItem task={task} key={task._id} />
+					<TaskListItem task={task} key={task._id} openDeleteModal={openDeleteModal} />
 				))}
 			</ul>
 		</div>
 	);
 };
 
-export default TaskList;
+export default React.memo(TaskList);

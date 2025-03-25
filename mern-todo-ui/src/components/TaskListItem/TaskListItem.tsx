@@ -12,9 +12,10 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 interface TaskListItemProps {
 	task: Task;
+	openDeleteModal: () => void;
 }
 
-const TaskListItem: React.FC<TaskListItemProps> = ({ task }) => {
+const TaskListItem: React.FC<TaskListItemProps> = ({ task, openDeleteModal }) => {
 	const dispatch = useContext(SelectedTaskDispatchContext);
 
 	return (
@@ -30,11 +31,11 @@ const TaskListItem: React.FC<TaskListItemProps> = ({ task }) => {
 					<IconButton>
 						<FontAwesomeIcon icon={faPenToSquare} />
 					</IconButton>
-					<DeleteTaskIcon taskId={task._id} onDelete={() => { }} />
+					<DeleteTaskIcon taskId={task._id} onDelete={openDeleteModal} />
 				</div>
 			</div>
 		</li>
 	);
 };
 
-export default TaskListItem;
+export default React.memo(TaskListItem);

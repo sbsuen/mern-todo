@@ -1,30 +1,31 @@
-import { useState } from 'react';
-import { ToDoListProvider } from '../../contexts/ToDoListContext';
+import { lazy, Suspense } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 import AppContextProvider from '../../contexts/AppContextProvider';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
-import { AddTaskForm, AddTaskFormSubmitButton } from '../AddTaskForm/AddTaskForm';
 import TaskList from '../TaskList/TaskList';
+import useModal from '../../hooks/useModal';
 
-const ToDoList: React.FC<any> = () => {
-	const [showAddTaskModal, setShowAddTaskModal] = useState(false);
-	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-	const openAddTaskModal = () => {
-		setShowAddTaskModal(true);
-	};
+const AddTaskForm = lazy(() => import('../AddTaskForm/AddTaskForm'));
+const AddTaskFormSubmitButtons = lazy(() => import('../AddTaskForm/AddTaskFormButtons'));
+const DeleteTaskForm = lazy(() => import('../DeleteTaskForm/DeleteTaskForm'));
+const DeleteTaskFormButtons = lazy(() => import('../DeleteTaskForm/DeleteTaskFormButtons'));
 
-	const closeAddTaskModal = () => {
-		setShowAddTaskModal(false);
-	};
+function ToDoList(): React.ReactElement {
+	const tasks = useSelector((state: RootState) => state.tasks.tasks);
+	const {
+		showModal: showAddTaskModal,
+		openModal: openAddTaskModal,
+		closeModal: closeAddTaskModal
+	} = useModal();
 
-	const openDeleteTaskModal = () => {
-		setShowDeleteModal(true);
-	};
-
-	const closeDeleteTaskModal = () => {
-		setShowDeleteModal(false);
-	};
+	const {
+		showModal: showDeleteModal,
+		openModal: openDeleteTaskModal,
+		closeModal: closeDeleteTaskModal
+	} = useModal();
 
 	return (
 		<AppContextProvider>
@@ -38,15 +39,32 @@ const ToDoList: React.FC<any> = () => {
 						onClick={openAddTaskModal}
 					/>
 				</div>
-				<TaskList />
-				<Modal
-					id='addTaskModal'
-					title='Add Task'
-					show={showAddTaskModal}
-					onClose={closeAddTaskModal}
-					modalBody={<AddTaskForm onClose={closeAddTaskModal} />}
-					modalFooter={<AddTaskFormSubmitButton />}
-				/>
+				<TaskList tasks={tasks} openDeleteModal={openDeleteTaskModal} />
+				<Suspense fallback={<div>Loading...</div>}>
+					<Modal
+						id='addTaskModal'
+						title='Add Task'
+						show={showAddTaskModal}
+						onClose={closeAddTaskModal}
+						modalBody={<AddTaskForm onClose={closeAddTaskModal} />}
+						modalFooter={<AddTaskFormSubmitButtons />}
+					/>
+				</Suspense>
+				<Suspense fallback={<div>Loading...</div>}>
+					<Modal
+						id='deleteTaskModal'
+						title='Delete Task'
+						show={showDeleteModal}
+						onClose={closeDeleteTaskModal}
+						modalBody={<DeleteTaskForm />}
+						modalFooter={
+							<DeleteTaskFormButtons
+								onCancel={closeDeleteTaskModal}
+								onDelete={closeDeleteTaskModal}
+							/>
+						}
+					/>
+				</Suspense>
 			</div>
 		</AppContextProvider>
 	);

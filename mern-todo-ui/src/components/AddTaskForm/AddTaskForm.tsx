@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
-import { ToDoListDispatchContext } from '../../contexts/ToDoListContext';
-
-import Button from '../Button/Button';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import { addTask } from '../../store/slices/tasksSlice';
 
 interface AddTaskFormProps {
 	onClose: () => void;
@@ -11,7 +11,7 @@ export const AddTaskForm: React.FC<AddTaskFormProps> = ({ onClose }) => {
 	const [formData, setFormData] = useState({
 		taskName: ''
 	});
-	const dispatch = useContext(ToDoListDispatchContext);
+	const dispatch = useDispatch<AppDispatch>();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -23,12 +23,12 @@ export const AddTaskForm: React.FC<AddTaskFormProps> = ({ onClose }) => {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (dispatch) {
-			dispatch({
-				type: 'ADD_TASK',
-				payload: formData.taskName
-			});
+		if (formData.taskName.trim() === '') {
+			return;
 		}
+
+		// Using Redux
+		dispatch(addTask(formData.taskName));
 		setFormData({
 			taskName: ''
 		});
@@ -50,11 +50,4 @@ export const AddTaskForm: React.FC<AddTaskFormProps> = ({ onClose }) => {
 	);
 };
 
-export const AddTaskFormSubmitButton = () => (
-	<Button
-		label='Submit'
-		type={'submit'}
-		buttonStyle='link'
-		form='addTaskForm'
-	/>
-);
+export default AddTaskForm;

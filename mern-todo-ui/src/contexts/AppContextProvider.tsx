@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { SelectedTaskProvider } from './SelectedTaskContext';
-import { ToDoListProvider } from './ToDoListContext';
 
 const composeProviders = (providers: React.FC<any>[]) => {
 	return providers.reduce((Acc, Provider) => {
@@ -15,8 +14,7 @@ const composeProviders = (providers: React.FC<any>[]) => {
 };
 
 const AppContextProvider = composeProviders([
-    ToDoListProvider,
-    SelectedTaskProvider,
+    SelectedTaskProvider
     // …
 ]);
 

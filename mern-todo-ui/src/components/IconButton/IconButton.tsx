@@ -7,7 +7,6 @@ interface IconButtonProps {
 	ariaLabel?: string;
 	additionalClasses?: string;
 }
-
 const IconButton: React.FC<IconButtonProps> = ({
 	children,
 	onClick,
